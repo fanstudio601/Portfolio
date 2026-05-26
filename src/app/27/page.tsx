@@ -219,12 +219,12 @@ export default function Page27() {
         <TagChip key={t.label} tag={t} />
       ))}
 
-      {/* Bottom node circle with question icon */}
+      {/* Bottom node circle with question icon — center at (1497, 855) per Figma */}
       <div
         className="absolute anim-scale-in"
         style={{
-          left: 1499 - 40,
-          top: 743,
+          left: 1457,
+          top: 815,
           width: 80,
           height: 80,
           animationDelay: "1.3s",

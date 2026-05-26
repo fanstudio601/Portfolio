@@ -5,9 +5,21 @@ import { PageHeader } from "@/components/PageHeader";
 import { Img } from "@/components/Img";
 
 /* Page 15 — 01-2 组件变体：按分析场景细分不同子类
-   Shows a horizontal row of tilted/overlapping line chart variants. The
-   shapes are reproduced from a high-res Figma render; chrome animates in
-   above. */
+   Shows a horizontal row of overlapping line-chart variant cards. Each
+   card is a separate image asset (downloaded individually from Figma).
+   Chrome (header, chip, title) is real DOM text. */
+
+const LINE_CHARTS = [
+  "/figma/0b009810-fd00-4464-a632-e427eaf65002.png", // 折线图 1
+  "/figma/7db6eb0a-08df-4a86-8741-4ed3e06d1e6d.png", // 折线图 3
+  "/figma/ac6526b7-8139-4e45-9eee-b61f5715845d.png", // 折线图 8
+  "/figma/4c47496b-8f50-45bf-ab61-f26c3b8f9e82.png", // 折线图 4
+  "/figma/d97ddcf4-af11-4a26-ad3f-7a6685809638.png", // 折线图 5
+  "/figma/7a813db9-7aa6-4169-8980-ef0ec4059948.png", // 折线图 6
+  "/figma/b19bd5c9-d19b-4bad-883a-9f54e21b7c5f.png", // 折线图 7
+  "/figma/50972a82-3972-4f7d-882f-658211e22084.png", // 折线图 2
+];
+
 export default function Page15() {
   return (
     <PageFrame>
@@ -35,23 +47,38 @@ export default function Page15() {
         }
       />
 
-      {/* Body — overlapping line-chart variants, slides up */}
+      {/* Overlapping line chart variant cards. Each card is its own image. */}
       <div
-        className="absolute overflow-hidden anim-fade-up"
+        className="absolute flex items-start anim-fade-up"
         style={{
-          left: 0,
-          top: 224,
-          width: 1920,
-          height: 856,
+          left: 80,
+          top: 248,
+          height: 970,
           animationDelay: "0.4s",
         }}
       >
-        <Img
-          src="/figma/d91edb28-407e-48b4-a63d-d23d239e0910.png"
-          alt="组件变体"
-          className="block"
-          style={{ width: 1920, height: 1080, marginTop: -224 }}
-        />
+        {LINE_CHARTS.map((src, i) => (
+          <div
+            key={i}
+            className="shrink-0 overflow-hidden"
+            style={{
+              width: 641,
+              height: 970,
+              marginRight: -481,
+              borderRadius: 8,
+              boxShadow:
+                i === 0
+                  ? undefined
+                  : "-7px 0 13px 0 rgba(0,0,0,0.09)",
+            }}
+          >
+            <Img
+              src={src}
+              alt=""
+              className="block w-full h-full object-cover"
+            />
+          </div>
+        ))}
       </div>
 
       {/* Section chip */}

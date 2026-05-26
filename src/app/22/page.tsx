@@ -4,7 +4,16 @@ import { DarkPanel } from "@/components/DarkPanel";
 import { PageHeader } from "@/components/PageHeader";
 import { Img } from "@/components/Img";
 
-/* Page 22 — 02-4 v4: 加入 AI 生成，让图表基于真实数值更快生成 */
+/* Page 22 — 02-4 v4: 加入 AI 生成，让图表基于真实数值更快生成
+   Left column: manual entry mockup. Right column: 3 AI-flow mockups
+   side by side (DeepSeek setup → prompt → generated chart). All mockup
+   screenshots are individual image assets; text is real DOM. */
+
+const MANUAL_PANEL = "/figma/f5f59ce5-af3f-42bb-8430-e1ed4259e565.png"; // empty / API setup
+const AI_PROMPT = "/figma/573971df-9f5b-40b7-9501-6875568524ac.png"; // prompt + result
+const AI_DATA = "/figma/5aed77e4-47f5-40c7-9cec-637b64d81345.png"; // generated data
+const LOGO = "/figma/c0aec573-9eef-405e-8223-b745dfd96a6c.png";
+
 export default function Page22() {
   return (
     <PageFrame>
@@ -32,24 +41,134 @@ export default function Page22() {
         }
       />
 
+      {/* Left "从人工录入" column header chip */}
       <div
-        className="absolute overflow-hidden anim-fade-up"
+        className="absolute anim-fade-up"
+        style={{ left: 80, top: 257, animationDelay: "0.3s" }}
+      >
+        <p className="font-hei font-bold text-[16px] text-white/90 leading-7 whitespace-nowrap">
+          从人工录入，复杂内容很难成型
+        </p>
+        <p className="text-[14px] leading-6 text-white/70 mt-1 whitespace-nowrap">
+          复杂内容需重复录入，繁琐易错。
+        </p>
+      </div>
+
+      {/* Left mockup screenshot */}
+      <div
+        className="absolute anim-fade-up overflow-hidden"
         style={{
-          left: 0,
-          top: 224,
-          width: 1920,
-          height: 856,
-          animationDelay: "0.4s",
+          left: 105,
+          top: 360,
+          width: 380,
+          height: 600,
+          borderRadius: 16,
+          border: "1px solid #2d2d2d",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+          animationDelay: "0.5s",
         }}
       >
         <Img
-          src="/figma/18ed7988-aa0a-4e5e-96d8-d2552172257a.png"
-          alt="v4 AI 生成"
-          className="block"
-          style={{ width: 1920, height: 1080, marginTop: -224 }}
+          src={MANUAL_PANEL}
+          alt=""
+          className="block w-full h-full"
+          style={{ objectFit: "cover", objectPosition: "top" }}
         />
       </div>
 
+      {/* Bottom-left logo note */}
+      <div
+        className="absolute flex items-center gap-3 anim-fade-up"
+        style={{ left: 110, top: 975, animationDelay: "0.6s" }}
+      >
+        <div className="w-9 h-9 rounded-md overflow-hidden">
+          <Img src={LOGO} alt="" className="w-full h-full" />
+        </div>
+        <p className="text-[14px] text-white/70 whitespace-nowrap">
+          即图 InstaChart
+        </p>
+      </div>
+
+      {/* Big divider arrow */}
+      <div
+        className="absolute anim-fade-in"
+        style={{ left: 545, top: 600, animationDelay: "0.7s" }}
+      >
+        <svg width="80" height="40" viewBox="0 0 80 40" fill="none">
+          <path
+            d="M0 20H70M70 20L55 5M70 20L55 35"
+            stroke="white"
+            strokeOpacity="0.5"
+            strokeWidth="2"
+          />
+        </svg>
+      </div>
+
+      {/* Right "从AI 入口" column header */}
+      <div
+        className="absolute anim-fade-up"
+        style={{ left: 685, top: 257, animationDelay: "0.4s" }}
+      >
+        <p className="font-hei font-bold text-[16px] text-white/90 leading-7 whitespace-nowrap">
+          从AI 入口，复杂内容也能快速生成
+        </p>
+        <p className="text-[14px] leading-6 text-white/70 mt-1 whitespace-nowrap">
+          通过自然语言描述需求，AI按规范自动生成可用图表配置。
+        </p>
+      </div>
+
+      {/* AI prompt callout (right of mockups) */}
+      <div
+        className="absolute anim-fade-up"
+        style={{ left: 705, top: 460, animationDelay: "0.55s" }}
+      >
+        <div
+          className="inline-flex flex-col px-4 py-3 rounded-lg"
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            maxWidth: 380,
+          }}
+        >
+          <p className="text-[14px] leading-6 text-white/90">
+            生成一个&quot;各部门月度收支余统计&quot;的分组柱形图，部门包括：
+          </p>
+          <p className="text-[14px] leading-6 text-white/90">
+            销售部、产品部、运营部、市场部、客服部、技术部
+          </p>
+        </div>
+      </div>
+
+      {/* 3 AI flow mockups */}
+      {[
+        { src: MANUAL_PANEL, left: 740, delay: 0.65 },
+        { src: AI_PROMPT, left: 1130, delay: 0.72 },
+        { src: AI_DATA, left: 1480, delay: 0.79 },
+      ].map((m, i) => (
+        <div
+          key={i}
+          className="absolute anim-fade-up overflow-hidden"
+          style={{
+            left: m.left,
+            top: 380,
+            width: 360,
+            height: 620,
+            borderRadius: 16,
+            border: "1px solid #2d2d2d",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+            animationDelay: `${m.delay}s`,
+          }}
+        >
+          <Img
+            src={m.src}
+            alt=""
+            className="block w-full h-full"
+            style={{ objectFit: "cover", objectPosition: "top" }}
+          />
+        </div>
+      ))}
+
+      {/* Section chip with 02-4 */}
       <div
         className="absolute flex items-center gap-5"
         style={{ left: 80, top: 148 }}
@@ -69,8 +188,8 @@ export default function Page22() {
           </span>
         </div>
         <p
-          className="font-hei font-bold text-[36px] leading-10 text-white whitespace-nowrap anim-fade-right"
-          style={{ animationDelay: "0.25s" }}
+          className="font-hei font-bold text-[36px] leading-10 text-white whitespace-nowrap anim-fade-up"
+          style={{ animationDelay: "0.2s" }}
         >
           v4：加入 AI 生成，让图表基于真实数值更快生成
         </p>
