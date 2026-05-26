@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const TOTAL_PAGES = 5; // pages 0..4 — page 0 lives at "/", pages 1-4 at "/1".."/4"
+const TOTAL_PAGES = 37; // pages 0..36 — page 0 at "/", pages 1-36 at "/1".."/36"
 
 function hrefFor(id: number) {
   return id === 0 ? "/" : `/${id}`;
