@@ -29,3 +29,137 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ---------- Animations ---------- */
+
+/* Entrance keyframes — used with animation-fill-mode: backwards so the
+   "from" state is held during animation-delay. */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-left {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fade-right {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Continuous loops */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes float-tilt {
+  0%, 100% { transform: translateY(0) rotate(5.2deg); }
+  50%      { transform: translateY(-6px) rotate(5.5deg); }
+}
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0),
+                inset 0 -3px 3px 0 rgba(0,0,0,0.25),
+                inset 0 3px 4px 0 #3f3e44;
+  }
+  50% {
+    box-shadow: 0 0 24px 4px rgba(255, 255, 255, 0.15),
+                inset 0 -3px 3px 0 rgba(0,0,0,0.25),
+                inset 0 3px 4px 0 #3f3e44;
+  }
+}
+@keyframes shimmer-text {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+@keyframes drift-h {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(10px); }
+}
+@keyframes drift-v {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50%      { transform: translateY(-12px) rotate(var(--rot, 0deg)); }
+}
+@keyframes typeface-reveal {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  to   { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Entrance utility classes (backwards fill so delay holds the start state) */
+.anim-fade-up   { animation: fade-up   0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.anim-fade-down { animation: fade-down 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.anim-fade-left { animation: fade-left 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.anim-fade-right{ animation: fade-right 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.anim-fade-in   { animation: fade-in   1.0s  ease-out backwards; }
+.anim-scale-in  { animation: scale-in  1.0s  cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.anim-reveal    { animation: typeface-reveal 1.2s cubic-bezier(0.7, 0, 0.3, 1) backwards; }
+
+/* Continuous ambient motion */
+.anim-float      { animation: float-soft 5s ease-in-out infinite; }
+.anim-float-tilt { animation: float-tilt 6s ease-in-out infinite; }
+.anim-pulse-glow { animation: pulse-glow 3.5s ease-in-out infinite; }
+.anim-shimmer    { animation: shimmer-text 3s ease-in-out infinite; }
+.anim-drift-h    { animation: drift-h 7s ease-in-out infinite; }
+.anim-drift-v    { animation: drift-v 4.5s ease-in-out infinite; }
+
+/* Chained animation: fade-up first, then continuous float */
+.anim-fade-then-float {
+  animation: fade-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards,
+             float-soft 5s ease-in-out 1.2s infinite;
+}
+.anim-fade-then-float-tilt {
+  animation: fade-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards,
+             float-tilt 6s ease-in-out 1.2s infinite;
+}
+
+/* Hover transitions for interactive elements */
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease-out;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+}
+.hover-tag {
+  transition: transform 0.3s ease-out, background-color 0.3s ease-out,
+              border-color 0.3s ease-out;
+}
+.hover-tag:hover {
+  transform: scale(1.08);
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Mouse-parallax layer — JS updates the --px / --py CSS variables (-1..1).
+   The layer translates by `intensity * (px, py) * 40px`. */
+.parallax-layer {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(
+    calc(var(--px, 0) * var(--ix, 1) * 24px),
+    calc(var(--py, 0) * var(--iy, 1) * 16px),
+    0
+  );
+  will-change: transform;
+}
+
+/* Respect user motion preference */
+@media (prefers-reduced-motion: reduce) {
+  [class*="anim-"] {
+    animation: none !important;
+  }
+  .parallax-layer { transform: none !important; }
+  .hover-lift:hover { transform: none !important; }
+  .hover-tag:hover { transform: none !important; }
+}

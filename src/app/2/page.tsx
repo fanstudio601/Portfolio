@@ -23,15 +23,17 @@ const Card = ({
   title,
   description,
   children,
+  delay = 0,
 }: {
   x: number;
   tag: string;
   title: React.ReactNode;
   description: React.ReactNode;
   children: React.ReactNode;
+  delay?: number;
 }) => (
   <div
-    className="absolute overflow-hidden rounded-[20px]"
+    className="absolute overflow-hidden rounded-[20px] anim-fade-up hover-lift"
     style={{
       left: x,
       top: 260,
@@ -39,6 +41,7 @@ const Card = ({
       height: 755,
       background: "#000",
       boxShadow: "inset 0 3px 3px 0 #2d2d2d",
+      animationDelay: `${delay}s`,
     }}
   >
     <div
@@ -74,11 +77,17 @@ export default function Page2() {
         }
       />
 
-      {/* Top signature */}
-      <Signature x={787} y={41} />
+      {/* Top signature — fade in then float softly */}
+      <div
+        className="anim-fade-then-float"
+        style={{ animationDelay: "0.2s" }}
+      >
+        <Signature x={787} y={41} />
+      </div>
 
       {/* Card 1: 外勤语音填报 */}
       <Card
+        delay={0.3}
         x={53}
         tag="0-1 全链路产品落地"
         title="员工外勤语音填报"
@@ -123,6 +132,7 @@ export default function Page2() {
 
       {/* Card 2: 图表组件库 + Figma 看板 */}
       <Card
+        delay={0.45}
         x={672}
         tag="可视化组件 × 插件工具"
         title="图表组件库 与 Figma 看板插件"
@@ -193,6 +203,7 @@ export default function Page2() {
 
       {/* Card 3: 设计系统 × AI */}
       <Card
+        delay={0.6}
         x={1291}
         tag="设计系统 × AI"
         title={
@@ -214,6 +225,33 @@ export default function Page2() {
           </>
         }
       >
+        {/* Cone gradient backdrop — wide trapezoid converging into the central button.
+            max-w-none overrides Tailwind preflight's max-width:100% so the SVG can extend
+            past the card edges, then overflow-hidden on the card clips it cleanly. */}
+        <Img
+          src="/figma/3a786afc-3db9-42db-94d3-2e58c04cbda6.svg"
+          alt=""
+          className="absolute pointer-events-none max-w-none"
+          style={{
+            left: -139.67,
+            top: 297,
+            width: 834,
+            height: 454,
+          }}
+        />
+        {/* Inner outline path (smaller, layered on top) */}
+        <Img
+          src="/figma/8b561e87-e8ba-477f-a073-d896c1753ad3.svg"
+          alt=""
+          className="absolute pointer-events-none max-w-none"
+          style={{
+            left: -43.17,
+            top: 377,
+            width: 634.5,
+            height: 308.4,
+          }}
+        />
+
         {/* Skills cloud */}
         <div
           className="absolute"
@@ -226,38 +264,49 @@ export default function Page2() {
             🤔
           </p>
           {[
-            { text: "Components", x: 35, y: 80, rot: -10 },
-            { text: "IDE", x: 65, y: 145, rot: 4 },
-            { text: "skills", x: 170, y: 135, rot: 4 },
-            { text: "Tokens", x: 195, y: 65, rot: 6 },
-            { text: "xxx.md", x: 325, y: 80, rot: 25 },
-            { text: "Stitch", x: 290, y: 135, rot: 25 },
-            { text: "Figma MCP", x: 160, y: 200, rot: -5 },
-            { text: "...", x: 200, y: 265, rot: 10 },
+            { text: "Components", x: 35, y: 80, rot: -10, dur: 5.2, off: 0 },
+            { text: "IDE", x: 65, y: 145, rot: 4, dur: 4.8, off: 1.1 },
+            { text: "skills", x: 170, y: 135, rot: 4, dur: 5.6, off: 0.4 },
+            { text: "Tokens", x: 195, y: 65, rot: 6, dur: 5.4, off: 1.8 },
+            { text: "xxx.md", x: 325, y: 80, rot: 25, dur: 5.0, off: 0.7 },
+            { text: "Stitch", x: 290, y: 135, rot: 25, dur: 5.5, off: 2.2 },
+            { text: "Figma MCP", x: 160, y: 200, rot: -5, dur: 4.6, off: 1.5 },
+            { text: "...", x: 200, y: 265, rot: 10, dur: 4.9, off: 0.9 },
           ].map((t, i) => (
             <div
               key={i}
-              className="absolute"
+              className="absolute anim-fade-up"
               style={{
                 left: t.x,
                 top: t.y,
-                transform: `rotate(${t.rot}deg)`,
+                animationDelay: `${1 + i * 0.06}s`,
               }}
             >
               <div
-                className="px-4 py-1 rounded-lg text-[16px] leading-[26px] text-white whitespace-nowrap"
-                style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "0.75px solid rgba(255,255,255,0.2)",
-                }}
+                className="anim-drift-v"
+                style={
+                  {
+                    "--rot": `${t.rot}deg`,
+                    animationDuration: `${t.dur}s`,
+                    animationDelay: `${t.off}s`,
+                  } as React.CSSProperties
+                }
               >
-                {t.text}
+                <div
+                  className="px-4 py-1 rounded-lg text-[16px] leading-[26px] text-white whitespace-nowrap hover-tag"
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "0.75px solid rgba(255,255,255,0.2)",
+                  }}
+                >
+                  {t.text}
+                </div>
               </div>
             </div>
           ))}
-          {/* Central button */}
+          {/* Central button — pulses with a soft glow */}
           <div
-            className="absolute rounded-full flex items-center justify-center"
+            className="absolute rounded-full flex items-center justify-center anim-pulse-glow"
             style={{
               left: "50%",
               top: 320,
@@ -265,8 +314,6 @@ export default function Page2() {
               width: 65,
               height: 65,
               background: "#2d2d2d",
-              boxShadow:
-                "inset 0 -3px 3px 0 rgba(0,0,0,0.25), inset 0 3px 4px 0 #3f3e44",
             }}
           >
             <Img

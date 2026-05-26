@@ -72,42 +72,69 @@ export default function Page1() {
         subtitle="个人信息"
         right={
           <div className="flex items-center gap-16">
-            <ContactIcon
-              src="/figma/f6c94229-9c85-4521-9031-a6acb133b596.svg"
-              label="18660557495"
-            />
-            <ContactIcon
-              src="/figma/115ad976-5157-4a09-b3d5-b3f71a5c9ce7.svg"
-              label="vanvan_0422 (范米花儿)"
-              withAvatar
-            />
-            <ContactIcon
-              src="/figma/ed39812c-dc89-4364-afbd-5f3df34e3f54.svg"
-              label="fan422601@gmail.com"
-            />
+            <div className="anim-fade-down" style={{ animationDelay: "0.1s" }}>
+              <ContactIcon
+                src="/figma/f6c94229-9c85-4521-9031-a6acb133b596.svg"
+                label="18660557495"
+              />
+            </div>
+            <div className="anim-fade-down" style={{ animationDelay: "0.2s" }}>
+              <ContactIcon
+                src="/figma/115ad976-5157-4a09-b3d5-b3f71a5c9ce7.svg"
+                label="vanvan_0422 (范米花儿)"
+                withAvatar
+              />
+            </div>
+            <div className="anim-fade-down" style={{ animationDelay: "0.3s" }}>
+              <ContactIcon
+                src="/figma/ed39812c-dc89-4364-afbd-5f3df34e3f54.svg"
+                label="fan422601@gmail.com"
+              />
+            </div>
           </div>
         }
       />
 
-      {/* Left column: signature + role chips */}
-      <div className="absolute" style={{ left: 81, top: 497 }}>
-        <Signature x={0} y={0} />
-        <div className="flex flex-col gap-3 mt-12" style={{ marginLeft: 0 }}>
+      {/* Left column: signature with continuous float */}
+      <div
+        className="anim-fade-then-float"
+        style={{ animationDelay: "0.2s" }}
+      >
+        <Signature x={81} y={497} />
+      </div>
+
+      {/* Role chips — staggered fade-up */}
+      <div
+        className="absolute flex flex-col gap-3 items-start"
+        style={{ left: 81, top: 668 }}
+      >
+        <div className="anim-fade-up" style={{ animationDelay: "0.5s" }}>
           <Chip>UI/UX Designer</Chip>
+        </div>
+        <div className="anim-fade-up" style={{ animationDelay: "0.6s" }}>
           <Chip>Design Engineer</Chip>
         </div>
       </div>
 
-      {/* Middle column: Work */}
+      {/* Middle column: Work — slides up */}
       <div
-        className="absolute flex gap-6"
-        style={{ left: 528, top: 391, width: 814, height: 472 }}
+        className="absolute flex gap-6 anim-fade-up"
+        style={{
+          left: 528,
+          top: 391,
+          width: 814,
+          height: 472,
+          animationDelay: "0.4s",
+        }}
       >
-        <div className="flex flex-col items-center h-full">
+        <div className="flex flex-col items-center h-full w-1.5 shrink-0">
           <Bullet />
-          <div
-            className="flex-1 w-px"
-            style={{ background: "rgba(255,255,255,0.15)" }}
+          {/* Dashed vertical line under the bullet */}
+          <Img
+            src="/figma/8ce42eb4-a54f-41b3-8817-0fb75611f55c.svg"
+            alt=""
+            className="block flex-1"
+            style={{ width: 1 }}
           />
         </div>
         <div className="flex-1 flex flex-col justify-between">
@@ -145,20 +172,24 @@ export default function Page1() {
         </div>
       </div>
 
-      {/* Right column: Learn + Certify */}
+      {/* Right column: Learn + Certify — slides from the right */}
       <div
-        className="absolute flex flex-col"
-        style={{ left: 1549, top: 391, width: 291, gap: 120 }}
+        className="absolute flex flex-col anim-fade-left"
+        style={{
+          left: 1549,
+          top: 391,
+          width: 291,
+          gap: 120,
+          animationDelay: "0.55s",
+        }}
       >
         <div className="flex gap-6">
-          <div
-            className="w-1.5 shrink-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.05))",
-              height: 176,
-              borderRadius: 999,
-            }}
+          {/* Dot + dashed vertical line (Figma imgCol0 SVG) */}
+          <Img
+            src="/figma/6a5ed92c-6e3e-4ac6-b6fe-7baa736258fd.svg"
+            alt=""
+            className="block shrink-0"
+            style={{ width: 6, height: 176 }}
           />
           <div className="flex flex-col gap-9 w-[91px]">
             <h2 className="font-display font-bold text-[28px] leading-8 text-white">
@@ -172,14 +203,12 @@ export default function Page1() {
           </div>
         </div>
         <div className="flex gap-6">
-          <div
-            className="w-1.5 shrink-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.05))",
-              height: 176,
-              borderRadius: 999,
-            }}
+          {/* Dot + dashed vertical line (Figma imgCol0 SVG) */}
+          <Img
+            src="/figma/6a5ed92c-6e3e-4ac6-b6fe-7baa736258fd.svg"
+            alt=""
+            className="block shrink-0"
+            style={{ width: 6, height: 176 }}
           />
           <div className="flex flex-col gap-9 w-[140px]">
             <h2 className="font-display font-bold text-[28px] leading-8 text-white">

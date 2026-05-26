@@ -70,9 +70,11 @@ const NumberedStep = ({
 );
 
 const Arrow = () => (
-  <div
-    className="w-10 h-px shrink-0"
-    style={{ background: "rgba(255,255,255,0.3)" }}
+  <Img
+    src="/figma/d1ee2e68-b1aa-4a18-91be-d908a7ec20d8.svg"
+    alt=""
+    className="block shrink-0"
+    style={{ width: 40, height: 6 }}
   />
 );
 
@@ -102,12 +104,19 @@ export default function Page3() {
         }
       />
 
-      {/* Phone rows (decorative, behind text-ish but starting from canvas) */}
-      <PhoneRow images={PHONE_IMAGES_TOP} top={127} />
-      <PhoneRow images={PHONE_IMAGES_BOTTOM} top={676} />
+      {/* Phone rows — slide in from the right */}
+      <div className="anim-fade-left" style={{ animationDelay: "0.3s" }}>
+        <PhoneRow images={PHONE_IMAGES_TOP} top={127} />
+      </div>
+      <div className="anim-fade-left" style={{ animationDelay: "0.45s" }}>
+        <PhoneRow images={PHONE_IMAGES_BOTTOM} top={676} />
+      </div>
 
       {/* Section tag */}
-      <div className="absolute" style={{ left: 80, top: 157 }}>
+      <div
+        className="absolute anim-fade-up"
+        style={{ left: 80, top: 157, animationDelay: "0.15s" }}
+      >
         <div
           className="inline-flex items-center rounded-lg px-3 py-1 text-[16px] leading-6 text-white font-hei font-bold"
           style={{
@@ -121,8 +130,8 @@ export default function Page3() {
 
       {/* Project title with logo */}
       <div
-        className="absolute flex items-center"
-        style={{ left: 71, top: 278 }}
+        className="absolute flex items-center anim-fade-up"
+        style={{ left: 71, top: 278, animationDelay: "0.25s" }}
       >
         <div className="w-12 h-12">
           <Img
@@ -136,28 +145,39 @@ export default function Page3() {
         </p>
       </div>
 
-      {/* Big title */}
+      {/* Big title — clipped-reveal effect (sweeps in from left) */}
       <h1
-        className="absolute font-hei font-bold text-white whitespace-nowrap"
-        style={{ left: 79, top: 372, fontSize: 73, lineHeight: "78px" }}
+        className="absolute font-hei font-bold text-white whitespace-nowrap anim-reveal"
+        style={{
+          left: 79,
+          top: 372,
+          fontSize: 73,
+          lineHeight: "78px",
+          animationDelay: "0.4s",
+        }}
       >
         我会怎么讲？
       </h1>
 
       {/* Accent line under title */}
-      <div
-        className="absolute h-[15px]"
+      <Img
+        src="/figma/8d202aa5-e8ee-4646-bec9-5d068e9d58b8.svg"
+        alt=""
+        className="absolute anim-fade-right"
         style={{
           left: 80,
           top: 502,
           width: 600,
-          background:
-            "linear-gradient(to right, rgba(255,255,255,0.2), transparent)",
+          height: 15,
+          animationDelay: "0.7s",
         }}
       />
 
       {/* Bullet points */}
-      <div className="absolute flex items-center gap-2" style={{ left: 80, top: 569 }}>
+      <div
+        className="absolute flex items-center gap-2 anim-fade-up"
+        style={{ left: 80, top: 569, animationDelay: "0.85s" }}
+      >
         <div className="w-8 h-8 flex items-center justify-center text-white/70">
           ✕
         </div>
@@ -165,13 +185,16 @@ export default function Page3() {
           我不会按照传统设计作品来讲，也不会只把它讲成一个开发项目
         </p>
       </div>
-      <div className="absolute flex items-center gap-2" style={{ left: 80, top: 617 }}>
+      <div
+        className="absolute flex items-center gap-2 anim-fade-up"
+        style={{ left: 80, top: 617, animationDelay: "0.95s" }}
+      >
         <div className="w-8 h-8 flex items-center justify-center text-white/70">
           ✓
         </div>
         <p className="text-[20px] leading-9 text-white/80">
           我更想讲的是，一个
-          <span className="font-hei font-bold text-[24px] text-white">
+          <span className="font-hei font-bold text-[24px] text-white anim-shimmer inline-block">
             “桥”
           </span>
         </p>
@@ -179,27 +202,45 @@ export default function Page3() {
 
       {/* Description */}
       <div
-        className="absolute font-hei font-bold text-[24px] text-white whitespace-nowrap"
-        style={{ left: 85, top: 694, lineHeight: "44px" }}
+        className="absolute font-hei font-bold text-[24px] text-white whitespace-nowrap anim-fade-up"
+        style={{
+          left: 85,
+          top: 694,
+          lineHeight: "44px",
+          animationDelay: "1.1s",
+        }}
       >
         <p>作为一名设计师，我是如何借助 AI Coding，</p>
         <p>从工作需求出发，完成从 Idea → 开发实现 → 最终落地。</p>
       </div>
 
-      {/* Roadmap */}
+      {/* Roadmap — stagger steps */}
       <div
         className="absolute flex flex-col gap-5"
         style={{ left: 85, top: 905, width: 787 }}
       >
-        <p className="text-[18px] leading-9 text-white/70">
+        <p
+          className="text-[18px] leading-9 text-white/70 anim-fade-up"
+          style={{ animationDelay: "1.3s" }}
+        >
           所以，后面的内容，我会按照这条顺序来讲：
         </p>
         <div className="flex gap-2 items-center">
-          <NumberedStep n={1} text="日常工作里发现问题" />
-          <Arrow />
-          <NumberedStep n={2} text=" 整个工具的开发流程" />
-          <Arrow />
-          <NumberedStep n={3} text="语音核心链路的具体落地" />
+          <div className="anim-fade-up" style={{ animationDelay: "1.45s" }}>
+            <NumberedStep n={1} text="日常工作里发现问题" />
+          </div>
+          <div className="anim-fade-in" style={{ animationDelay: "1.6s" }}>
+            <Arrow />
+          </div>
+          <div className="anim-fade-up" style={{ animationDelay: "1.7s" }}>
+            <NumberedStep n={2} text=" 整个工具的开发流程" />
+          </div>
+          <div className="anim-fade-in" style={{ animationDelay: "1.85s" }}>
+            <Arrow />
+          </div>
+          <div className="anim-fade-up" style={{ animationDelay: "1.95s" }}>
+            <NumberedStep n={3} text="语音核心链路的具体落地" />
+          </div>
         </div>
       </div>
     </PageFrame>
