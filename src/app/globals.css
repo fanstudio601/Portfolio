@@ -30,6 +30,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---------- Mobile auto-rotate ----------
+   The design is fixed at 1920x1080 (16:9). On a phone in portrait it would
+   scale down to a tiny strip. So when a small viewport is in portrait, we
+   rotate the body 90° to present the content as landscape. The user can
+   either tilt their phone 90° (CW becomes upright) or read it sideways.
+   PageFrame's fixed positioning sees the rotated body's box, so children
+   scale into the right dimensions automatically. */
+@media (orientation: portrait) and (max-width: 900px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+  body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vw;
+    transform-origin: 0 0;
+    transform: translateX(100vw) rotate(90deg);
+  }
+}
+
 /* ---------- Animations ---------- */
 
 /* Entrance keyframes — used with animation-fill-mode: backwards so the
