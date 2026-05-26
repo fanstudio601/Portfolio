@@ -42,7 +42,7 @@ const StepPill = ({
   </div>
 );
 
-const Arrow = ({ src, width = 30 }: { src: string; width?: number | string }) => (
+const Arrow = ({ src, width = 18 }: { src: string; width?: number | string }) => (
   <Img
     src={src}
     alt=""
@@ -250,7 +250,7 @@ export default function Page12() {
         <div className="flex flex-col gap-10 items-start shrink-0">
           <div
             className="flex items-center"
-            style={{ width: 445 }}
+            style={{ width: 360 }}
           >
             <StepPill n="10" text="单项字段" />
             <Arrow src="/figma/53f3b5a8-d4b8-461e-adde-dead908f8348.svg" width="100%" />
@@ -258,7 +258,7 @@ export default function Page12() {
             <Arrow src="/figma/53f3b5a8-d4b8-461e-adde-dead908f8348.svg" width="100%" />
             <StepPill n="12" text="提交1条" />
           </div>
-          <div className="flex items-center" style={{ width: 445 }}>
+          <div className="flex items-center" style={{ width: 360 }}>
             <StepPill n="10" text="批量字段" />
             <Arrow src="/figma/1afbcf86-899f-41c9-8d4b-4dd88eca6806.svg" width="100%" />
             <StepPill n="11" text="提示多条" />

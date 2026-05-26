@@ -60,7 +60,7 @@ export function PageNav() {
       <Link
         href={hrefFor(prevId!)}
         aria-label="上一页"
-        className="fixed left-4 top-1/2 -translate-y-1/2 z-50 grid place-items-center w-12 h-12 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/15 text-white/80 hover:bg-white/20 hover:text-white transition"
+        className="fixed left-4 top-1/2 -translate-y-1/2 z-50 grid place-items-center w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-white shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:bg-black/80 hover:border-white/50 transition"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path
@@ -75,7 +75,7 @@ export function PageNav() {
       <Link
         href={hrefFor(nextId!)}
         aria-label="下一页"
-        className="fixed right-4 top-1/2 -translate-y-1/2 z-50 grid place-items-center w-12 h-12 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/15 text-white/80 hover:bg-white/20 hover:text-white transition"
+        className="fixed right-4 top-1/2 -translate-y-1/2 z-50 grid place-items-center w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-white shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:bg-black/80 hover:border-white/50 transition"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path
@@ -89,7 +89,7 @@ export function PageNav() {
       </Link>
 
       {/* Page indicator */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/15 text-[12px] text-white/70 font-display tabular-nums">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-[12px] text-white/80 font-display tabular-nums shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
         <span className="text-white tabular-nums">{currentId! + 1}</span>
         <span className="text-white/40">/ {TOTAL_PAGES}</span>
       </div>

@@ -182,9 +182,8 @@ export default function Page8() {
           body={
             <div className="flex flex-col gap-2 items-start">
               <p>处理开始、结束、取消和移动的切换</p>
-              <CodeChip>
-                @touchstart / @touchend / @touchcancel / @touchmove
-              </CodeChip>
+              <CodeChip>@touchstart / @touchend</CodeChip>
+              <CodeChip>@touchcancel / @touchmove</CodeChip>
             </div>
           }
         />

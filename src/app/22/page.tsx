@@ -55,17 +55,16 @@ export default function Page22() {
         style={{ left: 80, top: 148 }}
       >
         <div
-          className="anim-scale-in inline-flex items-center justify-center px-4 py-1.5 rounded-full"
+          className="anim-scale-in inline-flex items-center justify-center px-5 py-1.5 rounded-full"
           style={{
             background: "#2d2d2d",
-            width: 71,
             height: 56,
             boxShadow:
               "inset 0 -4px 4px 0 rgba(0,0,0,0.25), inset 0 4px 5px 0 #3f3e44",
             animationDelay: "0.1s",
           }}
         >
-          <span className="font-display italic font-bold text-[24px] text-white/50">
+          <span className="font-display italic font-bold text-[24px] text-white/50 whitespace-nowrap leading-none">
             02-4
           </span>
         </div>

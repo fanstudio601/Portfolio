@@ -13,13 +13,13 @@ import { Img } from "@/components/Img";
 
 const SectionChip = ({ label }: { label: string }) => (
   <div
-    className="inline-flex items-center rounded-lg px-4 py-[9px]"
+    className="inline-flex items-center rounded-lg px-4 py-[9px] self-start w-fit"
     style={{
       background: "#2d2d2d",
       boxShadow: "inset 0 1px 1px 0 #5b5a61",
     }}
   >
-    <span className="text-[16px] leading-none text-white">{label}</span>
+    <span className="text-[16px] leading-none text-white whitespace-nowrap">{label}</span>
   </div>
 );
 
