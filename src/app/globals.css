@@ -50,8 +50,12 @@ body {
 
 @media (max-width: 900px) {
   :root {
-    --font-hei: var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei",
-      sans-serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC",
+      "Microsoft YaHei", sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "PingFang SC",
+      "Microsoft YaHei", sans-serif;
+    --font-hei: -apple-system, BlinkMacSystemFont, "PingFang SC",
+      "Microsoft YaHei", sans-serif;
   }
 }
 
