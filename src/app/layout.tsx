@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Montserrat, Noto_Sans_SC, Long_Cang } from "next/font/google";
+import { Montserrat, Noto_Sans_SC } from "next/font/google";
+import localFont from "next/font/local";
 import { PageNav } from "@/components/PageNav";
 import "./globals.css";
 
@@ -18,10 +19,11 @@ const notoSansSC = Noto_Sans_SC({
   display: "swap",
 });
 
-const longCang = Long_Cang({
-  variable: "--font-long-cang",
-  subsets: ["latin"],
-  weight: ["400"],
+const alimama = localFont({
+  src: "../../public/fonts/AlimamaShuHeiTi-Bold.woff2",
+  variable: "--font-alimama",
+  weight: "700",
+  style: "normal",
   display: "swap",
 });
 
@@ -38,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className={`${montserrat.variable} ${notoSansSC.variable} ${longCang.variable} antialiased`}
+      className={`${montserrat.variable} ${notoSansSC.variable} ${alimama.variable} antialiased`}
     >
       <body className="bg-black text-white">
         {children}

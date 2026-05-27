@@ -72,6 +72,7 @@ export function PageNav() {
     <>
       <Link
         href={hrefFor(prevId!)}
+        prefetch={false}
         aria-label="上一页"
         className="fixed left-4 top-1/2 -translate-y-1/2 z-50 grid place-items-center w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-white shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:bg-black/80 hover:border-white/50 transition"
       >
@@ -87,6 +88,7 @@ export function PageNav() {
       </Link>
       <Link
         href={hrefFor(nextId!)}
+        prefetch={false}
         aria-label="下一页"
         className="fixed right-4 top-1/2 -translate-y-1/2 z-50 grid place-items-center w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-white shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:bg-black/80 hover:border-white/50 transition"
       >

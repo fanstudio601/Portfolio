@@ -17,6 +17,7 @@ export function MouseParallax({ children }: { children: ReactNode }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     let targetX = 0;
     let targetY = 0;

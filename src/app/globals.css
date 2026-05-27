@@ -1,20 +1,12 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Alimama ShuHeiTi";
-  src: url("/fonts/AlimamaShuHeiTi-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @theme {
   --font-sans: var(--font-noto-sans-sc), var(--font-montserrat), "PingFang SC",
     "Microsoft YaHei", sans-serif;
   --font-display: var(--font-montserrat), var(--font-noto-sans-sc), sans-serif;
-  --font-hei: "Alimama ShuHeiTi", var(--font-noto-sans-sc), "PingFang SC",
+  --font-hei: var(--font-alimama), var(--font-noto-sans-sc), "PingFang SC",
     sans-serif;
-  --font-hand: var(--font-long-cang), "HanziPen SC", cursive;
+  --font-hand: "HanziPen SC", cursive;
 
   --color-bg: #101012;
   --color-stroke: #3f3e44;

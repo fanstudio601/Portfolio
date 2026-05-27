@@ -11,6 +11,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  */
 export function PageFrame({ children }: { children: ReactNode }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
+  const scaleRef = useRef(1);
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
@@ -21,7 +22,11 @@ export function PageFrame({ children }: { children: ReactNode }) {
       // correct even when an ancestor (body) is rotated for mobile portrait.
       const width = el.offsetWidth;
       const height = el.offsetHeight;
-      setScale(Math.min(width / 1920, height / 1080));
+      const nextScale = Number(Math.min(width / 1920, height / 1080).toFixed(4));
+      if (nextScale !== scaleRef.current) {
+        scaleRef.current = nextScale;
+        setScale(nextScale);
+      }
     };
     compute();
     const ro = new ResizeObserver(compute);
