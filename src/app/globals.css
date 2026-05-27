@@ -40,8 +40,11 @@ body {
     left: 0;
     width: 100vh;
     height: 100vw;
+    width: 100svh;
+    height: 100svw;
     transform-origin: 0 0;
     transform: translateX(100vw) rotate(90deg);
+    transform: translateX(100svw) rotate(90deg);
   }
 }
 
