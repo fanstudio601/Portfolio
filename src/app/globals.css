@@ -48,6 +48,13 @@ body {
   }
 }
 
+@media (max-width: 900px) {
+  :root {
+    --font-hei: var(--font-noto-sans-sc), "PingFang SC", "Microsoft YaHei",
+      sans-serif;
+  }
+}
+
 /* ---------- Animations ---------- */
 
 /* Entrance keyframes — used with animation-fill-mode: backwards so the
