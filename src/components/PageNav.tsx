@@ -4,7 +4,17 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const TOTAL_PAGES = 37; // pages 0..36 — page 0 at "/", pages 1-36 at "/1".."/36"
+/**
+ * The list of page IDs that actually have a route. The numbering matches
+ * the Figma deck — gaps (e.g. 16 removed) are skipped during navigation.
+ */
+const PAGE_IDS = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+  /* 16 removed */
+  17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+  27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+];
+const TOTAL_PAGES = PAGE_IDS.length;
 
 function hrefFor(id: number) {
   return id === 0 ? "/" : `/${id}`;
@@ -15,7 +25,7 @@ function idFromPath(pathname: string | null): number | null {
   const m = pathname?.match(/^\/(\d+)\/?$/);
   if (!m) return null;
   const n = parseInt(m[1], 10);
-  return n >= 0 && n < TOTAL_PAGES ? n : null;
+  return PAGE_IDS.includes(n) ? n : null;
 }
 
 /**
@@ -33,9 +43,12 @@ export function PageNav() {
   const currentId = idFromPath(pathname);
   const isPage = currentId !== null;
 
+  // Walk the PAGE_IDS list (which has gaps for removed pages) so prev/next
+  // never lands on a deleted route.
+  const idx = currentId === null ? -1 : PAGE_IDS.indexOf(currentId);
   const prevId =
-    currentId === null ? null : (currentId - 1 + TOTAL_PAGES) % TOTAL_PAGES;
-  const nextId = currentId === null ? null : (currentId + 1) % TOTAL_PAGES;
+    idx < 0 ? null : PAGE_IDS[(idx - 1 + PAGE_IDS.length) % PAGE_IDS.length];
+  const nextId = idx < 0 ? null : PAGE_IDS[(idx + 1) % PAGE_IDS.length];
 
   // Arrow-key navigation
   useEffect(() => {
@@ -90,7 +103,7 @@ export function PageNav() {
 
       {/* Page indicator */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/25 text-[12px] text-white/80 font-display tabular-nums shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
-        <span className="text-white tabular-nums">{currentId! + 1}</span>
+        <span className="text-white tabular-nums">{idx + 1}</span>
         <span className="text-white/40">/ {TOTAL_PAGES}</span>
       </div>
     </>
