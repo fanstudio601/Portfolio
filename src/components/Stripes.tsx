@@ -57,8 +57,8 @@ export function Stripes({ coverage = "full" }: { coverage?: "full" | "top" }) {
       <div
         className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
         style={{
-          backgroundImage: `url(${withBase("/figma/ed7d243a-253a-437c-8ba8-33132c4a91f8.png")})`,
-          backgroundSize: "1280px 768px",
+          backgroundImage: `url(${withBase("/figma/stripe-grain.png")})`,
+          backgroundSize: "320px 192px",
           backgroundRepeat: "repeat",
         }}
       />

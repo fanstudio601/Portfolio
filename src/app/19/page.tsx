@@ -5,7 +5,7 @@ import { DarkPanel } from "@/components/DarkPanel";
 import { PageHeader } from "@/components/PageHeader";
 import { Img } from "@/components/Img";
 
-const AVATAR = "/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png";
+const AVATAR = "/figma/case-avatar.png";
 const PLUGIN_CONFIG = "/figma/figma-page19-plugin-config.png";
 const PLUGIN_DATA = "/figma/figma-page19-plugin-data.png";
 

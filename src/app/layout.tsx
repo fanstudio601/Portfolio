@@ -10,6 +10,7 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
+  preload: false,
 });
 
 const notoSansSC = Noto_Sans_SC({
@@ -17,6 +18,7 @@ const notoSansSC = Noto_Sans_SC({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700", "900"],
   display: "swap",
+  preload: false,
 });
 
 const alimama = localFont({
@@ -25,6 +27,7 @@ const alimama = localFont({
   weight: "700",
   style: "normal",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -41,8 +44,12 @@ export default function RootLayout({
     <html
       lang="zh-CN"
       className={`${montserrat.variable} ${notoSansSC.variable} ${alimama.variable} antialiased`}
+      style={{ backgroundColor: "#000" }}
     >
-      <body className="bg-black text-white">
+      <body
+        className="bg-black text-white"
+        style={{ backgroundColor: "#000", color: "#fff" }}
+      >
         {children}
         <PageNav />
       </body>

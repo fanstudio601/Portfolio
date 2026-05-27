@@ -18,7 +18,7 @@ const CENTER_ITEMS: IconItem[] = [
   {
     icon: "/figma/e7b9a8bf-3ef8-4b0b-bf64-4a3c3ba3f43a.svg",
     label: "vanvan_0422 (范米花儿)",
-    extraRight: "/figma/9ddf4fef-c817-4c7f-805d-b2dc8ac2debb.png",
+    extraRight: "/figma/contact-avatar.png",
   },
   {
     icon: "/figma/bb54b995-04e0-42d0-931c-970337246ae6.svg",

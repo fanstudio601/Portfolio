@@ -5,7 +5,7 @@ import { DarkPanel } from "@/components/DarkPanel";
 import { PageHeader } from "@/components/PageHeader";
 import { Img } from "@/components/Img";
 
-const AVATAR = "/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png";
+const AVATAR = "/figma/case-avatar.png";
 const COMPONENT_TREE = "/figma/fe75b5ab-b01c-45b2-8f80-465d7fc4930b.png";
 const CHART_RESPONSIVE = "/figma/603261e0-3d30-4834-ab57-2e4c83fbdf38.png";
 const AUTO_LAYOUT_TALL = "/figma/d503e276-89b7-4e0c-82df-baa63b4109a0.png";

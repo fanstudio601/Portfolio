@@ -4,7 +4,7 @@ import { DarkPanel } from "@/components/DarkPanel";
 import { PageHeader } from "@/components/PageHeader";
 import { Img } from "@/components/Img";
 
-const AVATAR = "/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png";
+const AVATAR = "/figma/case-avatar.png";
 const PHONE_LEFT = "/figma/e19eb0a1-d678-41c3-95d7-ff7d626c2065.png";
 const PHONE_RIGHT = "/figma/00579cbd-969a-4ab1-bb5d-4028cca7339f.png";
 const PHONE_FRONT = "/figma/edc1b8ef-2fa5-44e4-b767-b200b9cb7356.png";

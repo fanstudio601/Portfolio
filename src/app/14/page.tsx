@@ -82,7 +82,7 @@ export default function Page14() {
             }}
           >
             <Img
-              src="/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png"
+              src="/figma/case-avatar.png"
               alt=""
               className="w-full h-full object-cover"
             />

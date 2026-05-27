@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { Img } from "@/components/Img";
 import { PageHeader } from "@/components/PageHeader";
 
-const AVATAR = "/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png";
+const AVATAR = "/figma/case-avatar.png";
 
 export function PortfolioHeader() {
   return (
