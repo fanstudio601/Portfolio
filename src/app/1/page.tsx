@@ -25,13 +25,6 @@ const Bullet = () => (
   />
 );
 
-const VLine = ({ height = 1 }: { height?: number }) => (
-  <div
-    className="w-px shrink-0"
-    style={{ height, background: "rgba(255,255,255,0.15)" }}
-  />
-);
-
 const HLine = () => (
   <div
     className="w-full h-px"

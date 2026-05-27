@@ -1,30 +1,120 @@
+import { DarkPanel } from "@/components/DarkPanel";
 import { PageFrame } from "@/components/PageFrame";
 import { Stripes } from "@/components/Stripes";
-import { DarkPanel } from "@/components/DarkPanel";
-import { PageHeader } from "@/components/PageHeader";
-import { Img } from "@/components/Img";
+import {
+  PortfolioHeader,
+  Screenshot,
+  SectionTitle,
+} from "@/components/CaseStudySlide";
 
-/* Page 25 — 02-7 v7: 加入看板功能，让输出从单个图表走向完整业务页面
-   Left: plugin "新建看板" configuration screenshot (single image asset).
-   Right: a full BI cost-analysis dashboard composed in Figma from many
-   vector chart primitives. The dashboard cannot practically be
-   decomposed into per-chart image assets (each chart is rendered as
-   ~100+ rectangles + paths in Figma) so we use the rendered dashboard
-   image as a single asset, with chrome + side annotations as real DOM. */
+const PLUGIN_SCREEN = "/figma/figma-page25-plugin.png";
+const DASHBOARD_SCREEN = "/figma/figma-page25-dashboard.png";
 
-const DASHBOARD_IMG = "/figma/99efbd5d-5cbb-49d7-bd7b-d14479f47465.png";
+const lines = [
+  {
+    src: "/figma/figma-page25-line-1.png",
+    left: 365,
+    top: 394,
+    width: 148,
+    height: 92,
+  },
+  {
+    src: "/figma/figma-page25-line-2.png",
+    left: 365,
+    top: 598,
+    width: 148,
+    height: 105,
+  },
+  {
+    src: "/figma/figma-page25-line-4.png",
+    left: 863,
+    top: 478,
+    width: 113,
+    height: 118,
+  },
+  {
+    src: "/figma/figma-page25-line-3.png",
+    left: 859,
+    top: 697,
+    width: 117,
+    height: 84,
+  },
+];
 
-function Bullet({
+const cards = [
+  {
+    n: "01",
+    left: 80,
+    top: 443,
+    title: "通过尺寸与栅格配置，确定看板布局",
+    desc: "同一组图表可根据不同终端场景，在插件内直接完成调整",
+  },
+  {
+    n: "02",
+    left: 80,
+    top: 662,
+    title: "通过标题占位，先完成整页内容概览",
+    desc: "考虑到插件内实时渲染的性能压力，先用“骨架”预览",
+  },
+  {
+    n: "03",
+    left: 960,
+    top: 443,
+    title: "通过拖拽排序，调整图表优先级",
+    desc: "按业务指标重点，调整图表顺序与版式占比",
+  },
+  {
+    n: "04",
+    left: 959,
+    top: 662,
+    title: "补充整页配置，完成看板导出",
+    desc: "统一整页标题、间距后，直接导出看板画布",
+  },
+];
+
+function LocalBadge({ n, delay }: { n: string; delay: number }) {
+  return (
+    <div
+      className="absolute flex items-center justify-center anim-fade-in"
+      style={{
+        left: -4,
+        top: -4,
+        width: 36.45,
+        height: 36.45,
+        animationDelay: `${delay}s`,
+      }}
+    >
+      <div
+        className="flex items-center justify-center rounded-full bg-[#2d2d2d]"
+        style={{
+          width: 28.44,
+          height: 28.44,
+          transform: "rotate(-20deg)",
+          boxShadow:
+            "inset 0 -2px 2px 0 rgba(0,0,0,0.25), inset 0 2px 2.5px 0 #3f3e44",
+        }}
+      >
+        <span className="font-display text-[12.2px] font-bold italic leading-none text-[#f7f8fa]">
+          {n}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function InfoCard({
+  n,
+  title,
+  desc,
   left,
   top,
-  width,
-  text,
   delay,
 }: {
+  n: string;
+  title: string;
+  desc: string;
   left: number;
   top: number;
-  width: number;
-  text: string;
   delay: number;
 }) {
   return (
@@ -33,15 +123,23 @@ function Bullet({
       style={{
         left,
         top,
-        width,
-        padding: "16px 24px",
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: 12,
+        width: 312,
+        minHeight: 139,
+        padding: 24,
+        zIndex: 2,
+        background: "rgba(255,255,255,0.02)",
+        border: "0.919px solid rgba(255,255,255,0.2)",
+        borderRadius: 16,
         animationDelay: `${delay}s`,
       }}
     >
-      <p className="text-[16px] leading-7 text-white/80">{text}</p>
+      <LocalBadge n={n} delay={delay + 0.08} />
+      <div className="flex flex-col gap-1">
+        <p className="font-hei text-[16px] font-bold leading-[29px] text-white/90">
+          {title}
+        </p>
+        <p className="text-[16px] leading-[29px] text-white/70">{desc}</p>
+      </div>
     </div>
   );
 }
@@ -51,131 +149,53 @@ export default function Page25() {
     <PageFrame>
       <Stripes coverage="top" />
       <DarkPanel top={101} />
-
-      <PageHeader
-        subtitle="图表组件库与Figma看板插件"
-        right={
-          <div
-            className="rounded-full overflow-hidden anim-fade-down"
-            style={{
-              width: 36,
-              height: 36,
-              border: "2px solid rgba(255,255,255,0.5)",
-              animationDelay: "0.1s",
-            }}
-          >
-            <Img
-              src="/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png"
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </div>
-        }
+      <PortfolioHeader />
+      <SectionTitle
+        section="02-7"
+        title="v7：加入看板功能，让输出从单个图表走向完整业务页面"
       />
 
-      {/* Right — BI dashboard preview (single rendered asset).
-          The dashboard contains 6+ Figma-vector charts (line, donut,
-          stacked-bar, KPI tiles) so this single rendered image is the
-          irreducible asset. Side annotations + chrome remain DOM. */}
-      <div
-        className="absolute anim-fade-up overflow-hidden"
-        style={{
-          left: 970,
-          top: 244,
-          width: 880,
-          height: 780,
-          borderRadius: 16,
-          border: "1px solid rgba(255,255,255,0.1)",
-          animationDelay: "0.6s",
-        }}
-      >
-        <Img
-          src={DASHBOARD_IMG}
-          alt="成本分析看板"
-          className="block w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "right" }}
+      {lines.map((line, index) => (
+        <Screenshot
+          key={line.src}
+          src={line.src}
+          left={line.left}
+          top={line.top}
+          width={line.width}
+          height={line.height}
+          delay={0.32 + index * 0.04}
+          radius={0}
+          objectFit="fill"
+          className="pointer-events-none z-[4]"
         />
-      </div>
+      ))}
 
-      {/* Left mockup placeholder — using same dashboard image but cropped to left
-          half (the plugin "新建看板" setup panel) */}
-      <div
-        className="absolute anim-fade-up overflow-hidden"
-        style={{
-          left: 460,
-          top: 290,
-          width: 380,
-          height: 700,
-          borderRadius: 11,
-          border: "2px solid #2d2d2d",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-          animationDelay: "0.5s",
-        }}
-      >
-        <Img
-          src={DASHBOARD_IMG}
-          alt=""
-          className="block w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "left" }}
-        />
-      </div>
+      {cards.map((card, index) => (
+        <InfoCard key={card.n} {...card} delay={0.38 + index * 0.08} />
+      ))}
 
-      {/* Left description bullets */}
-      <Bullet
-        left={80}
-        top={443}
-        width={312}
-        text="通过 17 个内置图层，搭建完整数据布局"
-        delay={0.4}
-      />
-      <Bullet
-        left={80}
-        top={662}
-        width={312}
-        text="通过组合内置，灵活搭建页内容编辑"
-        delay={0.5}
-      />
-      <Bullet
-        left={960}
-        top={443}
-        width={312}
-        text="通过预览页面，演练画布看板格式"
-        delay={0.45}
-      />
-      <Bullet
-        left={960}
-        top={662}
-        width={312}
-        text="兼容真实图表，同步画板等转"
+      <Screenshot
+        src={PLUGIN_SCREEN}
+        left={456}
+        top={260}
+        width={440}
+        height={741}
         delay={0.55}
+        radius={12}
+        objectFit="fill"
+        className="z-[3]"
       />
-
-      {/* Section chip with 02-7 */}
-      <div
-        className="absolute flex items-center gap-5"
-        style={{ left: 80, top: 148 }}
-      >
-        <div
-          className="anim-scale-in inline-flex items-center justify-center px-5 py-1.5 rounded-full"
-          style={{
-            background: "#2d2d2d",
-            height: 56,
-            boxShadow:
-              "inset 0 -4px 4px 0 rgba(0,0,0,0.25), inset 0 4px 5px 0 #3f3e44",
-            animationDelay: "0.1s",
-          }}
-        >
-          <span className="font-display italic font-bold text-[24px] text-white/50 whitespace-nowrap leading-none">
-            02-7
-          </span>
-        </div>
-        <p
-          className="font-hei font-bold text-[36px] leading-10 text-white whitespace-nowrap anim-fade-up"
-          style={{ animationDelay: "0.2s" }}
-        >
-          v7：加入看板功能，让输出从单个图表走向完整业务页面
-        </p>
-      </div>
+      <Screenshot
+        src={DASHBOARD_SCREEN}
+        left={1329}
+        top={189}
+        width={591}
+        height={820}
+        delay={0.65}
+        radius={0}
+        objectFit="fill"
+        className="z-[3]"
+      />
     </PageFrame>
   );
 }

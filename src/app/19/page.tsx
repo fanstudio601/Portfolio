@@ -1,56 +1,258 @@
+import type { ReactNode } from "react";
 import { PageFrame } from "@/components/PageFrame";
 import { Stripes } from "@/components/Stripes";
 import { DarkPanel } from "@/components/DarkPanel";
 import { PageHeader } from "@/components/PageHeader";
 import { Img } from "@/components/Img";
 
-/* Page 19 — 02-1 v1: MVP 开发，从图表组件构成 → 插件配置项
-   Left: a 分组柱形图 chart card with numbered annotations 1-7 showing the
-   anatomy of a chart component, lines linking to each annotation.
-   Right: two plugin "组件配置项" panels (config + data tabs).
-   All chart and panel screenshots are individual image assets. */
+const AVATAR = "/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png";
+const PLUGIN_CONFIG = "/figma/figma-page19-plugin-config.png";
+const PLUGIN_DATA = "/figma/figma-page19-plugin-data.png";
 
-const CHART_BAR = "/figma/268352ab-30ea-40c1-8196-b6b08edeca54.png"; // 分组柱形图
-const PANEL_CONFIG = "/figma/0a1d329d-68d2-425e-bdfd-5262a1a2bc48.png";
-const PANEL_DATA = "/figma/11c756c6-cb46-44cc-83c7-6e1770615383.png";
+const chartValues = [1250, 980, 750, 1120];
+const chartLabels = ["1月", "2月", "3月", "4月"];
+const yTicks = [2500, 2000, 1500, 1000, 500, 0];
 
-function NumChip({
-  left,
-  top,
+const leftLabels = [
+  { n: 1, label: "月度项目...", x: 754, y: 384, width: 116 },
+  { n: 2, label: "柱形图", x: 754, y: 455, width: 116 },
+  { n: 3, label: "金额", x: 754, y: 522, width: 116 },
+  { n: 4, label: "万元", x: 754, y: 585, width: 116 },
+  { n: 5, label: "2500", x: 754, y: 646, width: 116 },
+  { n: 6, label: "1月、2月", x: 754, y: 761, width: 116 },
+  { n: 7, label: "柱形高度", x: 754, y: 872, width: 116 },
+];
+
+const paramLabels = [
+  { n: 1, label: "图表标题", y: 383 },
+  { n: 2, label: "图表类型", y: 456 },
+  { n: 3, label: "Y轴标题", y: 530 },
+  { n: 4, label: "Y轴单位", y: 604 },
+  { n: 5, label: "Y轴标签", y: 678 },
+  { n: 6, label: "X轴标签", y: 752 },
+  { n: 7, label: "标签名称", y: 826 },
+  { n: 8, label: "数据数值", y: 900 },
+];
+
+function SectionTitle() {
+  return (
+    <div className="absolute flex items-center gap-5" style={{ left: 80, top: 148 }}>
+      <div
+        className="inline-flex h-14 items-center justify-center rounded-full px-4 py-1.5 anim-scale-in"
+        style={{
+          background: "#2d2d2d",
+          boxShadow:
+            "inset 0 -4px 4px 0 rgba(0,0,0,0.25), inset 0 4px 5px 0 #3f3e44",
+          animationDelay: "0.12s",
+        }}
+      >
+        <span className="font-display text-[24px] font-bold italic leading-none text-white/50">
+          02-1
+        </span>
+      </div>
+      <p
+        className="font-hei text-[36px] font-bold leading-10 text-white anim-fade-right"
+        style={{ animationDelay: "0.22s" }}
+      >
+        v1：MVP开发，从图表组件构成 → 插件配置项
+      </p>
+    </div>
+  );
+}
+
+function SmallChip({ children, left, top }: { children: ReactNode; left: number; top: number }) {
+  return (
+    <div
+      className="absolute inline-flex items-center justify-center rounded-lg px-4 py-[9px] anim-fade-up"
+      style={{
+        left,
+        top,
+        background: "#2d2d2d",
+        boxShadow: "inset 0 1px 1px 0 #5b5a61",
+        animationDelay: "0.32s",
+      }}
+    >
+      <span className="whitespace-nowrap text-[16px] leading-none text-[#f7f8fa]">
+        {children}
+      </span>
+    </div>
+  );
+}
+
+function NumberPill({
   n,
   label,
-  delay,
+  left,
+  top,
+  width,
 }: {
-  left: number;
-  top: number;
   n: number;
   label: string;
+  left: number;
+  top: number;
+  width: number;
+}) {
+  return (
+    <div
+      className="absolute flex h-[48px] items-center justify-center gap-2 rounded-lg bg-[#2d2d2d] px-4 py-0.5 anim-fade-up"
+      style={{
+        left,
+        top,
+        width,
+        boxShadow: "inset 0 1px 1px 0 #5b5a61",
+        animationDelay: `${0.52 + n * 0.035}s`,
+      }}
+    >
+      <span className="font-display text-[16px] font-bold italic leading-none text-white/50">
+        {n}
+      </span>
+      <span className="font-hei whitespace-nowrap text-[16px] font-bold leading-[38px] text-white">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function Marker({
+  n,
+  left,
+  top,
+  rotate = 0,
+}: {
+  n: number;
+  left: number;
+  top: number;
+  rotate?: number;
+}) {
+  return (
+    <div
+      className="absolute z-20 flex size-5 items-center justify-center rounded-[4px] bg-[#2d2d2d] text-center font-display text-[13px] font-bold italic leading-none text-white shadow-[0_2px_6px_rgba(0,0,0,0.35)]"
+      style={{ left, top, transform: `rotate(${rotate}deg)` }}
+    >
+      <span style={{ transform: `rotate(${-rotate}deg)` }}>{n}</span>
+    </div>
+  );
+}
+
+function ChartCard() {
+  return (
+    <div
+      className="absolute rounded-xl bg-white p-4 anim-fade-up"
+      style={{ left: 112, top: 505, width: 538, height: 306, animationDelay: "0.42s" }}
+    >
+      <p className="text-[16px] font-medium leading-6 text-[#1d2129]">
+        月度项目收款统计
+      </p>
+      <div className="mt-5 flex h-[226px]">
+        <div className="flex w-5 items-center justify-center">
+          <p className="-rotate-90 whitespace-nowrap text-center text-[12px] leading-5 text-[#86909c]">
+            金额(万元)
+          </p>
+        </div>
+        <div className="flex w-[44px] flex-col justify-between pb-6 pr-1 text-right text-[12px] leading-5 text-[#86909c]">
+          {yTicks.map((tick) => (
+            <span key={tick}>{tick}</span>
+          ))}
+        </div>
+        <div className="relative h-full flex-1">
+          <div className="absolute inset-x-0 top-0 bottom-6 flex flex-col justify-between">
+            {yTicks.map((tick) => (
+              <span
+                key={tick}
+                className="block h-px w-full border-t border-dashed border-[#e5e6eb]"
+              />
+            ))}
+          </div>
+          <div className="absolute inset-x-0 bottom-6 h-px bg-[#1d2129]" />
+          <div className="absolute inset-x-0 top-0 bottom-6 flex items-end">
+            {chartValues.map((value, index) => (
+              <div key={chartLabels[index]} className="flex h-full flex-1 items-end justify-center px-[23px]">
+                <span
+                  className="block w-full bg-[#165dff]"
+                  style={{ height: `${(value / 2500) * 100}%` }}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="absolute inset-x-0 bottom-0 flex h-6 items-start pt-1 text-center text-[12px] leading-5 text-[#272e3b]">
+            {chartLabels.map((label) => (
+              <span key={label} className="flex-1">
+                {label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ConnectorLines() {
+  return (
+    <svg
+      className="absolute left-0 top-0 pointer-events-none anim-fade-in"
+      width="1920"
+      height="1080"
+      viewBox="0 0 1920 1080"
+      fill="none"
+      style={{ animationDelay: "0.7s" }}
+      aria-hidden
+    >
+      <g stroke="#4e4e4e" strokeWidth="1.2" strokeDasharray="4 4">
+        <path d="M194 499L194 401L750 401" />
+        <path d="M517 741L517 899L750 899" />
+        <path d="M360 703.5L360 473L750 473" />
+        <path d="M99 650.5H88V448H699.3V545H750" />
+        <path d="M99 688H88V448H699.3V617H750" />
+        <path d="M132 567H88V448H699.3V690H750" />
+        <path d="M251 800.8V846H691.5V794H750" />
+      </g>
+      <g stroke="#165dff" strokeWidth="1">
+        <path d="M502 694H512" />
+        <path d="M507 694V771" strokeDasharray="2 2" />
+        <path d="M502 771H512" />
+      </g>
+      <g fill="#d9d9d9" opacity="0.1">
+        <path d="M991.547 647L1015.093 677.274L991.547 663.621L968 677.274L991.547 647Z" />
+        <path d="M970.94 653L988.881 675.425L970.94 665.312L953 675.425L970.94 653Z" />
+        <path d="M951.577 656L966.153 672.819L951.577 665.234L937 672.819L951.577 656Z" />
+      </g>
+    </svg>
+  );
+}
+
+function PluginShot({
+  src,
+  left,
+  width,
+  delay,
+}: {
+  src: string;
+  left: number;
+  width: number;
   delay: number;
 }) {
   return (
     <div
-      className="absolute flex items-center gap-2 anim-fade-up"
-      style={{ left, top, animationDelay: `${delay}s` }}
+      className="absolute overflow-hidden rounded-xl border-[3px] border-[#2d2d2d] anim-fade-up"
+      style={{ left, top: 339, width, height: 661, animationDelay: `${delay}s` }}
     >
-      <div
-        className="inline-flex items-center justify-center"
-        style={{
-          width: 24,
-          height: 24,
-          borderRadius: 999,
-          background: "#2d2d2d",
-          boxShadow:
-            "inset 0 -2px 2px 0 rgba(0,0,0,0.25), inset 0 2px 3px 0 #3f3e44",
-        }}
-      >
-        <span className="font-display italic font-bold text-[12px] text-white/80 leading-none">
-          {n}
-        </span>
-      </div>
-      <span className="text-[14px] leading-6 text-white/80 whitespace-nowrap">
-        {label}
-      </span>
+      <Img src={src} alt="" className="block h-full w-full object-cover object-top" />
     </div>
+  );
+}
+
+function ScreenshotMarkers() {
+  return (
+    <>
+      <Marker n={1} left={1295} top={421} rotate={30} />
+      <Marker n={2} left={1294} top={486} rotate={30} />
+      <Marker n={3} left={1294} top={643} rotate={30} />
+      <Marker n={5} left={1293} top={539} rotate={30} />
+      <Marker n={6} left={1687} top={463} rotate={30} />
+      <Marker n={7} left={1871} top={463} rotate={30} />
+      <Marker n={4} left={1463} top={643} rotate={30} />
+    </>
   );
 }
 
@@ -64,7 +266,7 @@ export default function Page19() {
         subtitle="图表组件库与Figma看板插件"
         right={
           <div
-            className="rounded-full overflow-hidden anim-fade-down"
+            className="overflow-hidden rounded-full anim-fade-down"
             style={{
               width: 36,
               height: 36,
@@ -72,192 +274,60 @@ export default function Page19() {
               animationDelay: "0.1s",
             }}
           >
-            <Img
-              src="/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png"
-              alt=""
-              className="w-full h-full object-cover"
-            />
+            <Img src={AVATAR} alt="" className="h-full w-full object-cover" />
           </div>
         }
       />
 
-      {/* Left container — 影响范围 */}
+      <SectionTitle />
+
       <div
-        className="absolute anim-fade-up"
-        style={{
-          left: 80,
-          top: 244,
-          width: 860,
-          height: 781,
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: 16,
-          animationDelay: "0.35s",
-        }}
+        className="absolute rounded-br-2xl rounded-tr-2xl border-y border-r border-white/20 bg-white/[0.02] anim-fade-up"
+        style={{ left: 0, top: 271, width: 900, height: 775, animationDelay: "0.24s" }}
       />
-      {/* "影响范围" chip */}
       <div
-        className="absolute anim-fade-up"
-        style={{ left: 111, top: 274, animationDelay: "0.4s" }}
-      >
-        <div
-          className="inline-flex items-center px-4 py-2 rounded-lg"
-          style={{
-            background: "#2d2d2d",
-            boxShadow: "inset 0 1px 1px 0 #5b5a61",
-          }}
-        >
-          <span className="text-[16px] leading-none text-white">影响范围</span>
-        </div>
-      </div>
-      {/* "图表组件树构成" title */}
-      <p
-        className="absolute font-hei font-bold text-[24px] text-white whitespace-nowrap anim-fade-up"
-        style={{ left: 111, top: 343, lineHeight: "38px", animationDelay: "0.45s" }}
-      >
-        图表组件树构成
-      </p>
-
-      {/* Left — bar chart card with numbered annotations */}
-      <div
-        className="absolute anim-fade-up overflow-hidden"
-        style={{
-          left: 240,
-          top: 480,
-          width: 360,
-          height: 460,
-          background: "white",
-          borderRadius: 12,
-          border: "1px solid #2d2d2d",
-          animationDelay: "0.55s",
-        }}
-      >
-        <Img src={CHART_BAR} alt="" className="block w-full h-full" style={{ objectFit: "contain" }} />
-      </div>
-
-      {/* Numbered annotations along the right side of the chart card */}
-      <NumChip left={640} top={490} n={1} label="标题" delay={0.65} />
-      <NumChip left={640} top={540} n={2} label="图例" delay={0.7} />
-      <NumChip left={640} top={590} n={3} label="Y轴" delay={0.75} />
-      <NumChip left={640} top={640} n={4} label="数据" delay={0.8} />
-      <NumChip left={640} top={690} n={5} label="2500..." delay={0.85} />
-      <NumChip left={640} top={740} n={6} label="X轴、2项" delay={0.9} />
-      <NumChip left={640} top={790} n={7} label="柱形高度" delay={0.95} />
-
-      {/* Arrow between left and right sections */}
-      <div
-        className="absolute anim-fade-in"
-        style={{ left: 925, top: 620, animationDelay: "1s" }}
-      >
-        <svg width="50" height="20" viewBox="0 0 50 20" fill="none">
-          <path d="M0 10H44M44 10L36 2M44 10L36 18" stroke="white" strokeOpacity="0.5" strokeWidth="2" />
-        </svg>
-      </div>
-
-      {/* Right container — 组件配置项 */}
-      <div
-        className="absolute anim-fade-up"
-        style={{
-          left: 980,
-          top: 244,
-          width: 860,
-          height: 781,
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: 16,
-          animationDelay: "0.45s",
-        }}
+        className="absolute rounded-bl-2xl rounded-tl-2xl border-y border-l border-white/20 bg-white/[0.02] anim-fade-up"
+        style={{ left: 1020, top: 271, width: 900, height: 775, animationDelay: "0.28s" }}
       />
-      {/* "组件配置项" chip */}
-      <div
-        className="absolute anim-fade-up"
-        style={{ left: 1011, top: 274, animationDelay: "0.5s" }}
-      >
-        <div
-          className="inline-flex items-center px-4 py-2 rounded-lg"
-          style={{
-            background: "#2d2d2d",
-            boxShadow: "inset 0 1px 1px 0 #5b5a61",
-          }}
-        >
-          <span className="text-[16px] leading-none text-white">组件配置项</span>
-        </div>
-      </div>
-      {/* "配置图表组件" title */}
-      <p
-        className="absolute font-hei font-bold text-[24px] text-white whitespace-nowrap anim-fade-up"
-        style={{ left: 1011, top: 343, lineHeight: "38px", animationDelay: "0.55s" }}
-      >
-        基于组件树，配置插件参数
-      </p>
 
-      {/* Plugin panels */}
-      <div
-        className="absolute anim-fade-up overflow-hidden"
-        style={{
-          left: 1060,
-          top: 430,
-          width: 330,
-          height: 560,
-          borderRadius: 12,
-          border: "1px solid #2d2d2d",
-          animationDelay: "0.7s",
-        }}
-      >
-        <Img
-          src={PANEL_CONFIG}
-          alt=""
-          className="block w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "top" }}
-        />
-      </div>
-      <div
-        className="absolute anim-fade-up overflow-hidden"
-        style={{
-          left: 1430,
-          top: 430,
-          width: 330,
-          height: 560,
-          borderRadius: 12,
-          border: "1px solid #2d2d2d",
-          boxShadow: "-4px 0 4px rgba(0,0,0,0.08)",
-          animationDelay: "0.78s",
-        }}
-      >
-        <Img
-          src={PANEL_DATA}
-          alt=""
-          className="block w-full h-full"
-          style={{ objectFit: "cover", objectPosition: "top" }}
-        />
-      </div>
+      <SmallChip left={404} top={253}>基础柱形图</SmallChip>
+      <SmallChip left={1408} top={253}>插件配置参数</SmallChip>
 
-      {/* Section chip with 02-1 */}
-      <div
-        className="absolute flex items-center gap-5"
-        style={{ left: 80, top: 148 }}
-      >
-        <div
-          className="anim-scale-in inline-flex items-center justify-center px-5 py-1.5 rounded-full"
-          style={{
-            background: "#2d2d2d",
-            height: 56,
-            boxShadow:
-              "inset 0 -4px 4px 0 rgba(0,0,0,0.25), inset 0 4px 5px 0 #3f3e44",
-            animationDelay: "0.1s",
-          }}
-        >
-          <span className="font-display italic font-bold text-[24px] text-white/50 whitespace-nowrap leading-none">
-            02-1
-          </span>
-        </div>
-        <p
-          className="font-hei font-bold text-[36px] leading-10 text-white whitespace-nowrap anim-fade-up"
-          style={{ animationDelay: "0.2s" }}
-        >
-          v1: MVP 开发，从图表组件构成 → 插件配置项
-        </p>
-      </div>
+      <ChartCard />
+      <ConnectorLines />
+      {leftLabels.map((item) => (
+        <NumberPill
+          key={`${item.n}-${item.label}`}
+          n={item.n}
+          label={item.label}
+          left={item.x}
+          top={item.y}
+          width={item.width}
+        />
+      ))}
+
+      {paramLabels.map((item) => (
+        <NumberPill
+          key={item.n}
+          n={item.n}
+          label={item.label}
+          left={1050}
+          top={item.y}
+          width={115}
+        />
+      ))}
+
+      <PluginShot src={PLUGIN_CONFIG} left={1203} width={394} delay={0.54} />
+      <PluginShot src={PLUGIN_DATA} left={1607} width={392} delay={0.62} />
+
+      <Marker n={1} left={183} top={508} />
+      <Marker n={2} left={350} top={713} />
+      <Marker n={7} left={507} top={710} rotate={33} />
+      <Marker n={6} left={241} top={756} />
+      <Marker n={3} left={106} top={674} rotate={-45} />
+      <Marker n={4} left={106} top={636} rotate={-45} />
+      <Marker n={5} left={136} top={548} rotate={-40} />
+      <ScreenshotMarkers />
     </PageFrame>
   );
 }

@@ -74,7 +74,7 @@ const SEMANTIC_CARDS: SemanticCard[] = [
       <>
         <p>例：Dashboard</p>
         <p>- Goal：针对经营分析等场景，回答业务表现，首屏须独立表达结论</p>
-        <p>- Layout：遵循"先总览后原因"优先级，自上而下排布指标、图表与明细</p>
+        <p>- Layout：遵循&quot;先总览后原因&quot;优先级，自上而下排布指标、图表与明细</p>
         <p>- Linkage：全局筛选变更时各区块联动</p>
         <p>- State：各数据区块需支持独立的 Loading / Empty / Error 状态展示</p>
       </>

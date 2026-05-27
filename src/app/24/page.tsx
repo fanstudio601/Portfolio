@@ -1,173 +1,274 @@
+import { DarkPanel } from "@/components/DarkPanel";
 import { PageFrame } from "@/components/PageFrame";
 import { Stripes } from "@/components/Stripes";
-import { DarkPanel } from "@/components/DarkPanel";
-import { PageHeader } from "@/components/PageHeader";
+import {
+  PortfolioHeader,
+  Screenshot,
+  SectionTitle,
+} from "@/components/CaseStudySlide";
 import { Img } from "@/components/Img";
 
-/* Page 24 — 02-6 v6: 加入收藏功能，让相似业务场景，从重复制作走向资产复用
-   Four plugin-screen mockups arranged in a row, each illustrating a
-   step of the collect-and-reuse flow (favorite → restore → edit →
-   export). Each mockup is an individual image asset; descriptions
-   above each card and the bottom caption are real DOM text. */
-
-const STEP_IMG_1 = "/figma/a9c63352-b1a3-48a6-9a14-bdfaaf8afa60.png";
-const STEP_IMG_2 = "/figma/0ebbf449-5000-4139-bab6-e0bcb60b10ce.png";
-const STEP_IMG_3 = "/figma/be947a2b-5f48-45af-ac7b-da3d34636489.png";
-const STEP_IMG_4 = "/figma/b985d4e3-087c-4f5c-a892-4a87f83161c9.png";
-
 const STEPS = [
-  { n: "01", title: "收藏常用图表", desc: "沉淀高频业务配置，减少重复制作", src: STEP_IMG_1 },
-  { n: "02", title: "恢复原有配置", desc: "回到收藏时的数据配置", src: STEP_IMG_2 },
-  { n: "03", title: "二次编辑调整", desc: "针对新场景做小范围修改", src: STEP_IMG_3 },
-  { n: "04", title: "再次收藏 / 导出到画布", desc: "保留新版本沉淀，或直接导出当前图表", src: STEP_IMG_4 },
+  {
+    n: "01",
+    left: 80,
+    imageLeft: 90,
+    title: "收藏常用图表",
+    desc: "沉淀高频业务配置，减少重复制作",
+    src: "/figma/figma-page24-favorite.png",
+  },
+  {
+    n: "02",
+    left: 548,
+    imageLeft: 558,
+    title: "恢复原有配置",
+    desc: "回到收藏时的数据配置",
+    src: "/figma/figma-page24-restore.png",
+  },
+  {
+    n: "03",
+    left: 1016,
+    imageLeft: 1026,
+    title: "二次编辑调整",
+    desc: "针对新场景做小范围修改",
+    src: "/figma/figma-page24-edit.png",
+  },
+  {
+    n: "04",
+    left: 1484,
+    imageLeft: 1494,
+    title: "再次收藏 / 导出到画布",
+    desc: "保留新版本沉淀，或直接导出当前图表",
+    src: "/figma/figma-page24-export.png",
+  },
 ];
+
+const ARROWS = [
+  {
+    src: "/figma/figma-page24-arrow-1.svg",
+    left: 328,
+    top: 489.18,
+    width: 343.46,
+    height: 254.78,
+    innerWidth: 319.34,
+    innerHeight: 217.48,
+    imgStyle: {
+      left: "-0.92%",
+      top: 0,
+      width: "102.09%",
+      height: "101.47%",
+    },
+  },
+  {
+    src: "/figma/figma-page24-arrow-2.svg",
+    left: 690.72,
+    top: 509.12,
+    width: 421.1,
+    height: 349.79,
+    innerWidth: 386.82,
+    innerHeight: 304.92,
+    imgStyle: {
+      left: "-0.83%",
+      top: "-0.73%",
+      width: "100.83%",
+      height: "101.81%",
+    },
+  },
+  {
+    src: "/figma/figma-page24-arrow-3.svg",
+    left: 1264.24,
+    top: 462,
+    width: 486.91,
+    height: 298.98,
+    innerWidth: 460.53,
+    innerHeight: 244.68,
+    imgStyle: {
+      left: "-0.65%",
+      top: 0,
+      width: "101.48%",
+      height: "101.31%",
+    },
+  },
+];
+
+function LocalBadge({ n, delay }: { n: string; delay: number }) {
+  return (
+    <div
+      className="absolute anim-fade-in"
+      style={{
+        left: -3.72,
+        top: 6,
+        width: 36.45,
+        height: 36.45,
+        animationDelay: `${delay}s`,
+      }}
+    >
+      <div
+        className="flex items-center justify-center rounded-full bg-[#2d2d2d]"
+        style={{
+          width: 28.44,
+          height: 28.44,
+          transform: "rotate(-20deg)",
+          boxShadow:
+            "inset 0 -2.031px 2.031px 0 rgba(0,0,0,0.25), inset 0 2.031px 2.539px 0 #3f3e44",
+        }}
+      >
+        <span className="font-display text-[12.188px] font-bold italic leading-none text-[#f7f8fa]">
+          {n}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function InfoCard({
+  n,
+  title,
+  desc,
+  left,
+  delay,
+}: {
+  n: string;
+  title: string;
+  desc: string;
+  left: number;
+  delay: number;
+}) {
+  return (
+    <div
+      className="absolute anim-fade-up"
+      style={{
+        left,
+        top: 245,
+        width: 360,
+        minHeight: 110,
+        padding: 24,
+        background: "rgba(255,255,255,0.02)",
+        border: "0.919px solid rgba(255,255,255,0.2)",
+        borderRadius: 16,
+        animationDelay: `${delay}s`,
+      }}
+    >
+      <LocalBadge n={n} delay={delay + 0.05} />
+      <div className="flex flex-col gap-1">
+        <p className="font-hei text-[16px] font-bold leading-[29px] text-white/90">
+          {title}
+        </p>
+        <p className="text-[16px] leading-[29px] text-white/70">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+function FlowArrow({
+  src,
+  left,
+  top,
+  width,
+  height,
+  innerWidth,
+  innerHeight,
+  imgStyle,
+  delay,
+}: (typeof ARROWS)[number] & { delay: number }) {
+  return (
+    <div
+      className="absolute flex items-center justify-center pointer-events-none anim-fade-in"
+      style={{ left, top, width, height, animationDelay: `${delay}s` }}
+    >
+      <div
+        className="relative"
+        style={{
+          width: innerWidth,
+          height: innerHeight,
+          transform: "rotate(7deg)",
+        }}
+      >
+        <Img
+          src={src}
+          alt=""
+          className="absolute block max-w-none"
+          style={imgStyle}
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function Page24() {
   return (
     <PageFrame>
       <Stripes coverage="top" />
       <DarkPanel top={101} />
-
-      <PageHeader
-        subtitle="图表组件库与Figma看板插件"
-        right={
-          <div
-            className="rounded-full overflow-hidden anim-fade-down"
-            style={{
-              width: 36,
-              height: 36,
-              border: "2px solid rgba(255,255,255,0.5)",
-              animationDelay: "0.1s",
-            }}
-          >
-            <Img
-              src="/figma/4c6570a8-e7d7-4868-aa84-aa6a1abf046d.png"
-              alt=""
-              className="w-full h-full object-cover"
-            />
-          </div>
-        }
+      <PortfolioHeader />
+      <SectionTitle
+        section="02-6"
+        title="v6：加入收藏功能，让相似业务场景，从重复制作走向资产复用"
       />
 
-      {/* 4 step cards */}
-      {STEPS.map((s, i) => {
-        const left = 80 + i * 468;
-        return (
-          <div key={s.n}>
-            <div
-              className="absolute anim-fade-up"
-              style={{
-                left,
-                top: 245,
-                width: 360,
-                padding: 24,
-                background: "rgba(255,255,255,0.02)",
-                border: "0.9px solid rgba(255,255,255,0.2)",
-                borderRadius: 16,
-                animationDelay: `${0.3 + i * 0.07}s`,
-              }}
-            >
-              <p className="font-hei font-bold text-[16px] text-white/90 leading-7 mb-1">
-                {s.title}
-              </p>
-              <p className="text-[16px] leading-7 text-white/70">{s.desc}</p>
-              <div
-                className="absolute flex items-center justify-center"
-                style={{
-                  left: -28,
-                  top: -28,
-                  width: 36,
-                  height: 36,
-                  borderRadius: 999,
-                  background: "#2d2d2d",
-                  boxShadow:
-                    "inset 0 -2px 2px 0 rgba(0,0,0,0.25), inset 0 2px 3px 0 #3f3e44",
-                  transform: "rotate(-20deg)",
-                }}
-              >
-                <span className="font-display italic font-bold text-[12px] text-white leading-none">
-                  {s.n}
-                </span>
-              </div>
-            </div>
-            {/* Mockup screenshot */}
-            <div
-              className="absolute anim-fade-up overflow-hidden"
-              style={{
-                left: left - 50,
-                top: 373,
-                width: 340,
-                height: 573,
-                borderRadius: 11,
-                border: "2px solid #2d2d2d",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-                animationDelay: `${0.5 + i * 0.07}s`,
-              }}
-            >
-              <Img
-                src={s.src}
-                alt=""
-                className="block w-full h-full"
-                style={{ objectFit: "cover", objectPosition: "top" }}
-              />
-            </div>
-          </div>
-        );
-      })}
+      {STEPS.map((step, index) => (
+        <div key={step.n}>
+          <InfoCard
+            n={step.n}
+            left={step.left}
+            title={step.title}
+            desc={step.desc}
+            delay={0.3 + index * 0.08}
+          />
+          <Screenshot
+            src={step.src}
+            left={step.imageLeft}
+            top={373}
+            width={340}
+            height={index === 1 ? 567 : 573}
+            delay={0.52 + index * 0.08}
+            radius={index === 0 ? 10.75 : 12}
+            border={index === 0 ? "1.792px solid #2d2d2d" : "2px solid #2d2d2d"}
+            shadow="0 4px 24px rgba(0,0,0,0.3)"
+            objectFit="cover"
+            imgStyle={
+              index === 1
+                ? {
+                    position: "absolute",
+                    left: "-0.58%",
+                    top: "-0.35%",
+                    width: "101.16%",
+                    height: "101.06%",
+                    objectFit: "fill",
+                  }
+                : undefined
+            }
+          />
+        </div>
+      ))}
+      {ARROWS.map((arrow, index) => (
+        <FlowArrow key={arrow.src} {...arrow} delay={0.74 + index * 0.08} />
+      ))}
 
-      {/* Bottom gradient strip + caption */}
       <div
         className="absolute"
         style={{
           left: 0,
           top: 1001,
-          width: 1920,
+          width: 1919,
           height: 79,
-          background:
-            "linear-gradient(263deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 33%, rgba(255,255,255,0.1) 72%, rgba(255,255,255,0) 100%)",
           borderTop: "1px solid rgba(255,255,255,0)",
           borderBottom: "1px solid rgba(255,255,255,0)",
+          background:
+            "linear-gradient(263deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 33%, rgba(255,255,255,0.1) 72%, rgba(255,255,255,0) 100%)",
         }}
       />
       <p
-        className="absolute font-hei font-bold text-[20px] text-white/90 text-center whitespace-nowrap anim-fade-up"
+        className="absolute font-hei text-[20px] font-bold leading-6 text-white/90 whitespace-nowrap anim-fade-up"
         style={{
           left: 960,
           top: 1026,
           transform: "translateX(-50%)",
-          lineHeight: "24px",
-          animationDelay: "1s",
+          animationDelay: "0.98s",
         }}
       >
         收藏页 = 图表资产底层库
       </p>
-
-      {/* Section chip with 02-6 */}
-      <div
-        className="absolute flex items-center gap-5"
-        style={{ left: 80, top: 148 }}
-      >
-        <div
-          className="anim-scale-in inline-flex items-center justify-center px-5 py-1.5 rounded-full"
-          style={{
-            background: "#2d2d2d",
-            height: 56,
-            boxShadow:
-              "inset 0 -4px 4px 0 rgba(0,0,0,0.25), inset 0 4px 5px 0 #3f3e44",
-            animationDelay: "0.1s",
-          }}
-        >
-          <span className="font-display italic font-bold text-[24px] text-white/50 whitespace-nowrap leading-none">
-            02-6
-          </span>
-        </div>
-        <p
-          className="font-hei font-bold text-[36px] leading-10 text-white whitespace-nowrap anim-fade-up"
-          style={{ animationDelay: "0.2s" }}
-        >
-          v6：加入收藏功能，让相似业务场景，从重复制作走向资产复用
-        </p>
-      </div>
     </PageFrame>
   );
 }
